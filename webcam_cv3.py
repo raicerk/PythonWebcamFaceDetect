@@ -11,6 +11,7 @@ log.basicConfig(filename='webcam.log',level=log.INFO)
 video_capture = cv2.VideoCapture(0)
 anterior = 0
 
+count = 0
 while True:
     if not video_capture.isOpened():
         print('Unable to load camera.')
@@ -36,14 +37,11 @@ while True:
     if anterior != len(faces):
         anterior = len(faces)
         log.info("faces: "+str(len(faces))+" at "+str(dt.datetime.now()))
+        log.info("he detectado una cara")
+        if ret:
+            cv2.imwrite("./images/"+ '%d.png' % count, frame)
+            count += 1
 
-
-    # Display the resulting frame
-    cv2.imshow('Video', frame)
-
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
 
     # Display the resulting frame
     cv2.imshow('Video', frame)
